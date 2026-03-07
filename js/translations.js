@@ -1,5 +1,5 @@
 // ============================================
-// CODEURS PRO - SYSTÈME DE TRADUCTION i18n (MIS À JOUR)
+// CODERS_PRO - SYSTÈME DE TRADUCTION i18n (MIS À JOUR)
 // ============================================
 
 // Dictionnaire de traductions
@@ -19,14 +19,15 @@ const translations = {
         hero_stat_experts: "Experts",
         hero_stat_engagement: "% Engagement",
         hero_stat_support: "/ 7 Support",
+        hero_slogan: "Expert en Digitalisation au Burkina Faso",
 
         // About Section
         about_subtitle: "Qui Sommes-Nous",
         about_title: "À Propos de",
-        about_title_highlight: "Codeurs Pro",
+        about_title_highlight: "Coders_Pro",
         about_description: "Une équipe consolidée avec une vision commune",
         about_vision_title: "Notre Vision",
-        about_vision_text: "Codeurs Pro est une équipe dynamique de 5 professionnels passionnés par la digitalisation. Nous croyons en la puissance de la technologie pour transformer les entreprises et améliorer la vie des gens au Burkina Faso et au-delà.",
+        about_vision_text: "Coders_Pro est une équipe dynamique de 5 professionnels passionnés par la digitalisation. Nous croyons en la puissance de la technologie pour transformer les entreprises et améliorer la vie des gens au Burkina Faso et au-delà.",
         about_mission_title: "Notre Mission",
         about_mission_text: "Accompagner les entreprises dans leur transformation digitale en offrant des solutions innovantes, performantes et adaptées à leurs besoins spécifiques. Nous mettons notre expertise au service de votre réussite.",
         about_clean_code: "Code Propre",
@@ -37,11 +38,11 @@ const translations = {
         team_subtitle: "Les Experts",
         team_title: "Notre",
         team_title_highlight: "Équipe",
-        team_description: "Rencontrez les talents derrière Codeurs Pro",
+        team_description: "Rencontrez les talents derrière Coders_Pro",
         team_cofounder: "Co-Fondateur & Développeur",
         team_cofounder_f: "Co-Fondatrice & Développeuse",
         team_lead_dev: "Lead Développeur",
-        team_moussa_desc: "Expert en développement web et applications",
+        team_moussa_desc: "Expert en développement web et applications Mobile",
         team_ben_desc: "Spécialiste en solutions digitales",
         team_marc_desc: "Expert en architecture logicielle",
         team_sarifatou_desc: "Spécialiste en développement web et Design",
@@ -95,6 +96,8 @@ const translations = {
         projects_title_highlight: "Projets",
         projects_description: "Découvrez quelques-unes de nos réalisations",
         project_coming: "Projet à venir",
+        project_libraflow_title: "LibraFlow",
+        project_libraflow_desc: "Système innovant de gestion de bibliothèque",
         project_desc1: "Nous travaillons sur des projets innovants",
         project_desc2: "Restez connectés pour nos prochaines réalisations",
         project_desc3: "De grandes choses arrivent bientôt",
@@ -147,14 +150,15 @@ const translations = {
         hero_stat_experts: "Experts",
         hero_stat_engagement: "% Engagement",
         hero_stat_support: "/ 7 Support",
+        hero_slogan: "Digitalization Expert in Burkina Faso",
 
         // About Section
         about_subtitle: "Who We Are",
         about_title: "About",
-        about_title_highlight: "Codeurs Pro",
+        about_title_highlight: "Coders_Pro",
         about_description: "A consolidated team with a common vision",
         about_vision_title: "Our Vision",
-        about_vision_text: "Codeurs Pro is a dynamic team of 5 professionals passionate about digitalization. We believe in the power of technology to transform businesses and improve people's lives in Burkina Faso and beyond.",
+        about_vision_text: "Coders_Pro is a dynamic team of 5 professionals passionate about digitalization. We believe in the power of technology to transform businesses and improve people's lives in Burkina Faso and beyond.",
         about_mission_title: "Our Mission",
         about_mission_text: "Supporting businesses in their digital transformation by offering innovative, high-performance solutions tailored to their specific needs. We put our expertise at the service of your success.",
         about_clean_code: "Clean Code",
@@ -165,11 +169,11 @@ const translations = {
         team_subtitle: "The Experts",
         team_title: "Our",
         team_title_highlight: "Team",
-        team_description: "Meet the talents behind Codeurs Pro",
+        team_description: "Meet the talents behind Coders_Pro",
         team_cofounder: "Co-Founder & Developer",
         team_cofounder_f: "Co-Founder & Developer",
         team_lead_dev: "Lead Developer",
-        team_moussa_desc: "Expert in web development and applications",
+        team_moussa_desc: "Expert in web and mobile applications development",
         team_ben_desc: "Digital solutions specialist",
         team_marc_desc: "Software architecture expert",
         team_sarifatou_desc: "Specialist in web development and Design",
@@ -223,6 +227,8 @@ const translations = {
         projects_title_highlight: "Projects",
         projects_description: "Discover some of our achievements",
         project_coming: "Coming Soon",
+        project_libraflow_title: "LibraFlow",
+        project_libraflow_desc: "Innovative library management system",
         project_desc1: "We're working on innovative projects",
         project_desc2: "Stay tuned for our upcoming achievements",
         project_desc3: "Great things are coming soon",
@@ -267,7 +273,7 @@ let currentLanguage = 'fr';
 // Fonction pour changer la langue
 function changeLanguage(lang) {
     currentLanguage = lang;
-    localStorage.setItem('codeurs-pro-lang', lang);
+    localStorage.setItem('coders-pro-lang', lang);
     updateContent();
     updateLanguageButton();
 }
@@ -277,8 +283,12 @@ function updateContent() {
     const elements = document.querySelectorAll('[data-i18n]');
     elements.forEach(element => {
         const key = element.getAttribute('data-i18n');
-        if (translations[currentLanguage][key]) {
-            element.textContent = translations[currentLanguage][key];
+        try {
+            if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                element.textContent = translations[currentLanguage][key];
+            }
+        } catch (e) {
+            console.warn(`Erreur de traduction pour la clé: ${key}`, e);
         }
     });
 
@@ -309,14 +319,16 @@ let typedInstance = null;
 function updateTypedText() {
     const typedStrings = currentLanguage === 'fr'
         ? [
-            'Code\'s Our Professional',
+            'Expert en Digitalisation',
+            'Slogan : Code\'s Our Professional',
             'Développement Web Moderne',
             'Applications Mobiles Performantes',
             'Solutions Digitales Innovantes',
             'Votre Partenaire Digital au Burkina Faso'
         ]
         : [
-            'Code\'s Our Professional',
+            'Digitalization Expert',
+            'Slogan: Code\'s Our Professional',
             'Modern Web Development',
             'High-Performance Mobile Apps',
             'Innovative Digital Solutions',
@@ -353,10 +365,13 @@ function updateLanguageButton() {
 
 // Initialisation au chargement
 document.addEventListener('DOMContentLoaded', function () {
-    // Récupérer la langue sauvegardée
-    const savedLang = localStorage.getItem('codeurs-pro-lang');
-    if (savedLang) {
+    // Récupérer la langue sauvegardée avec vérification
+    const savedLang = localStorage.getItem('coders-pro-lang');
+    if (savedLang && translations[savedLang]) {
         currentLanguage = savedLang;
+    } else {
+        currentLanguage = 'fr';
+        localStorage.setItem('coders-pro-lang', 'fr');
     }
 
     // Mettre à jour le contenu initial

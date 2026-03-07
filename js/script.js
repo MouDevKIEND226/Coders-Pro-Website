@@ -1,5 +1,5 @@
 // ============================================
-// CODEURS PRO - SCRIPT JAVASCRIPT PROFESSIONNEL
+// CODERS_PRO - SCRIPT JAVASCRIPT PROFESSIONNEL
 // ============================================
 
 // === INITIALISATION EMAILJS ===
@@ -21,12 +21,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // === ANIMATIONS AOS ===
 function initAOS() {
-    AOS.init({
-        duration: 1000,
-        easing: 'ease-in-out',
-        once: true,
-        offset: 100
-    });
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+    } else {
+        setTimeout(initAOS, 500);
+    }
 }
 
 // === NAVIGATION ===
@@ -406,5 +410,60 @@ window.addEventListener('scroll', debounce(function () {
     // Code optimisé pour le scroll
 }, 10));
 
-console.log('%c🚀 Codeurs Pro - Site chargé avec succès!', 'color: #4CAF50; font-size: 16px; font-weight: bold;');
-console.log('%c💻 Développé avec passion par l\'équipe Codeurs Pro', 'color: #1a4d7a; font-size: 12px;');
+// === VIDEO MODAL LOGIC ===
+function openVideoModal(videoSrc) {
+    const modal = document.getElementById('videoModal');
+    const video = document.getElementById('modalVideo');
+    const source = video.querySelector('source');
+
+    if (modal && video && source) {
+        source.src = videoSrc;
+        video.load();
+        modal.classList.add('show');
+        video.muted = false; // Ensure sound is on in modal
+        video.play();
+        document.body.style.overflow = 'hidden'; // Stop scrolling
+    }
+}
+
+function closeVideoModal() {
+    const modal = document.getElementById('videoModal');
+    const video = document.getElementById('modalVideo');
+
+    if (modal && video) {
+        modal.classList.remove('show');
+        video.pause();
+        document.body.style.overflow = 'auto'; // Restart scrolling
+    }
+}
+
+// Global scope expose
+window.openVideoModal = openVideoModal;
+
+// Initialize Modal Close Events
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('videoModal');
+    const closeBtn = document.querySelector('.close-modal');
+
+    if (closeBtn) {
+        closeBtn.onclick = closeVideoModal;
+    }
+
+    // Close on click outside
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            closeVideoModal();
+        }
+    };
+
+    // Close on Escape key
+    document.onkeydown = function (evt) {
+        evt = evt || window.event;
+        if (evt.keyCode == 27) {
+            closeVideoModal();
+        }
+    };
+});
+
+console.log('%c🚀 Coders_Pro - Site chargé avec succès!', 'color: #4CAF50; font-size: 16px; font-weight: bold;');
+console.log('%c💻 Développé avec passion par l\'équipe Coders_Pro', 'color: #1a4d7a; font-size: 12px;');
