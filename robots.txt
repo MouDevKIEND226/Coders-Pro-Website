@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://coders-pro-website.netlify.app/sitemap.xml
+Sitemap: https://coders-pro.netlify.app/sitemap.xml
